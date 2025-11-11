@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "wa-fr-governance",
+    "name": "WA FR Gouvernance",
+    "description": "Articles gouvernance World Athletics en français",
+    "limit": 8,
+    "sort": "date_desc",
+    "allowed_domains": ["localhost"],
+    "filters": {
+      "sport": ["Athletics"],
+      "language": ["FR"],
+      "topics": ["gouvernance"]
+    }
+  },
+  {
+    "slug": "multisport-latest",
+    "name": "Multi sports actu express",
+    "description": "Dernières news et communiqués multi organisations",
+    "limit": 12,
+    "sort": "date_desc",
+    "allowed_domains": ["localhost"],
+    "filters": {
+      "content_type": ["news", "communiqué"]
+    }
+  }
+]

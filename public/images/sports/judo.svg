@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <defs>
+    <linearGradient id="grad-judo" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#78350f" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#grad-judo)" rx="18" ry="18" />
+  <rect
+    x="60"
+    y="70"
+    width="200"
+    height="40"
+    rx="6"
+    ry="6"
+    fill="rgba(255,255,255,0.2)"
+  />
+  <text
+    x="50%"
+    y="100"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="28"
+    fill="#fff7ed"
+    letter-spacing="8"
+  >
+    JUDO
+  </text>
+  <text
+    x="50%"
+    y="140"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="14"
+    fill="#fed7aa"
+  >
+    Olympic News Hub
+  </text>
+</svg>

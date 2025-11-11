@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <defs>
+    <linearGradient id="grad-cycling" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#grad-cycling)" rx="18" ry="18" />
+  <text
+    x="50%"
+    y="55%"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="30"
+    fill="#bfdbfe"
+    letter-spacing="6"
+  >
+    CYCLING
+  </text>
+  <text
+    x="50%"
+    y="78%"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="14"
+    fill="#dbeafe"
+  >
+    Olympic News Hub
+  </text>
+</svg>

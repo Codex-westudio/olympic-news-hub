@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <defs>
+    <linearGradient id="grad-football" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#14532d" />
+      <stop offset="100%" stop-color="#22c55e" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#grad-football)" rx="18" ry="18" />
+  <circle cx="260" cy="40" r="18" fill="rgba(255,255,255,0.15)" />
+  <circle cx="70" cy="60" r="28" fill="rgba(255,255,255,0.1)" />
+  <text
+    x="50%"
+    y="55%"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="30"
+    fill="#fefce8"
+    letter-spacing="4"
+  >
+    FOOTBALL
+  </text>
+  <text
+    x="50%"
+    y="76%"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="14"
+    fill="#d9f99d"
+  >
+    Olympic News Hub
+  </text>
+</svg>

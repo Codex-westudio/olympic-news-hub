@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 180">
+  <defs>
+    <linearGradient id="grad-volleyball" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+  </defs>
+  <rect width="320" height="180" fill="url(#grad-volleyball)" rx="18" ry="18" />
+  <text
+    x="50%"
+    y="55%"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="28"
+    fill="#1f2937"
+    letter-spacing="6"
+  >
+    VOLLEYBALL
+  </text>
+  <text
+    x="50%"
+    y="78%"
+    text-anchor="middle"
+    font-family="Arial, sans-serif"
+    font-size="14"
+    fill="#1f2937"
+  >
+    Olympic News Hub
+  </text>
+</svg>
