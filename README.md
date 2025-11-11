@@ -108,3 +108,30 @@ Lance-les avec `npm run test`.
 - `NEXT_PUBLIC_SITE_URL` est requis pour les embeds SSR (externe ou `localhost`).
 - `widgets.allowed_domains` est prévu pour un contrôle d’`Origin` lors d’une future V2.
 - Les scripts Supabase utilisent exclusivement la `service role key` côté serveur (workflow n8n, seeder, purge).
+
+## Workflow Git
+
+```bash
+# Vérifier l'état local
+git status
+
+# Mettre en scène les fichiers modifiés
+git add .          # ou git add <fichier>
+
+# Créer un commit
+git commit -m "feat: décrire la modification"
+
+# Pousser sur le dépôt GitHub
+git push origin main
+```
+
+Si tu dois (ré)utiliser HTTPS sur une nouvelle session/machine :
+```bash
+git remote set-url origin https://github.com/Codex-westudio/olympic-news-hub.git
+git push -u origin main   # Git demandera ton token Codex-westudio
+```
+
+Pour récupérer les changements avant de repartir :
+```bash
+git pull --rebase origin main
+```
