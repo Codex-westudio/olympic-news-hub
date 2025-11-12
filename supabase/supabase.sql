@@ -7,9 +7,22 @@ create table if not exists public.profiles (
   email text,
   full_name text,
   avatar_url text,
+  plan text not null default 'trial' check (plan in ('trial','personal','enterprise')),
+  plan_expires_at timestamptz,
+  plan_notes text,
+  is_active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+alter table if exists public.profiles
+  add column if not exists plan text not null default 'trial' check (plan in ('trial','personal','enterprise'));
+alter table if exists public.profiles
+  add column if not exists plan_expires_at timestamptz;
+alter table if exists public.profiles
+  add column if not exists plan_notes text;
+alter table if exists public.profiles
+  add column if not exists is_active boolean not null default true;
 
 -- Sources
 create table if not exists public.sources (

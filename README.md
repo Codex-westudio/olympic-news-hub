@@ -43,6 +43,7 @@ Variables attendues :
 - `NEXT_PUBLIC_SITE_URL` : utilisé pour les fetch SSR (embed) – défaut `http://localhost:3000`.
 - `NEXT_PUBLIC_SUPABASE_URL` et `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY` (serveur uniquement – **ne jamais** l’exposer côté client).
+- `ADMIN_EMAILS` : liste d’emails séparés par des virgules pouvant accéder à `/admin`.
 
 Sans clés Supabase, l’app reste en **Phase 1** avec les données locales.
 
@@ -79,12 +80,15 @@ Sans clés Supabase, l’app reste en **Phase 1** avec les données locales.
    ```
    - Supprime uniquement les entrées `is_fake = true` sans toucher aux données n8n.
 
-4. **Auth**
-   - `NEXT_PUBLIC_SUPABASE_URL` + `NEXT_PUBLIC_SUPABASE_ANON_KEY` doivent être configurées.
-   - Page `/auth` déclenche un lien magique (email). Le header affiche `Dashboard` lorsqu’un utilisateur est connecté.
+4. **Auth & plans**
+   - Page `/auth` déclenche un lien magique. À la première connexion, un profil `trial` (30 j) est créé dans Supabase, puis renouvelé si besoin côté admin.
+   - Middleware protège `/widgets` et `/admin` : redirection `/auth` si pas de session, `/admin` seulement pour les emails listés dans `ADMIN_EMAILS`.
+   - Page `/` affiche désormais une landing page (hero + plans) tant que l’utilisateur n’est pas connecté ; sinon, on retombe sur la liste d’articles si le plan est actif.
 
 5. **UI**
-   - La page `/` consomme `/api/articles` (qui bascule automatiquement sur Supabase lorsqu’il est configuré).
+   - `/` : landing + cards de prix pour les visiteurs, puis l’app originale une fois authentifié.
+   - `/widgets` : builder seulement si le plan est actif, sinon message pour choisir une offre.
+   - `/admin` : vue tableau pour suivre les profils (`plan`, `plan_expires_at`, `is_active`).
    - `/embed/[slug]` consomme `/api/widget/[slug]`, toujours en SSR via `NEXT_PUBLIC_SITE_URL`.
 
 ## Scripts

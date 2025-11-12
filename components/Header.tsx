@@ -4,17 +4,20 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
+import type { ProfilePlan } from "@/lib/profile";
+
 interface HeaderProps {
   isAuthenticated: boolean;
+  profile: ProfilePlan | null;
+  isAdmin?: boolean;
 }
 
 const navLinks = [
-  { href: "/", label: "Accueil" },
-  { href: "/widgets", label: "Widget builder" },
-  { href: "/auth", label: "Auth" },
+  { href: "/#plans", label: "Plans" },
+  { href: "/widgets", label: "Widgets" },
 ];
 
-export function Header({ isAuthenticated }: HeaderProps) {
+export function Header({ isAuthenticated, profile, isAdmin = false }: HeaderProps) {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
 
@@ -37,12 +40,32 @@ export function Header({ isAuthenticated }: HeaderProps) {
               {link.label}
             </Link>
           ))}
-          {isAuthenticated && (
+          {profile && (
+            <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+              Plan {profile.plan}
+            </span>
+          )}
+          {isAuthenticated ? (
             <Link
-              href="/dashboard"
-              className="rounded-full border border-gold px-3 py-1 text-gold"
+              href="/auth"
+              className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
             >
-              Dashboard
+              Mon espace
+            </Link>
+          ) : (
+            <Link
+              href="/auth"
+              className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
+            >
+              Se connecter
+            </Link>
+          )}
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className="rounded-full border border-gold px-3 py-1 text-sm font-semibold text-gold"
+            >
+              Admin
             </Link>
           )}
         </nav>
