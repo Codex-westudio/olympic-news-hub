@@ -57,17 +57,25 @@ async function fetchArticlesFromSupabase(args: ArticleQueryArgs): Promise<Pagina
     )
     .eq("status", "published");
 
-  const applyInFilter = <Key extends string>(column: Key, values?: readonly string[]) => {
-    if (values?.length) {
-      query = query.in(column, values as string[]);
-    }
-  };
+  if (args.sports?.length) {
+    query = query.in("sport", args.sports as string[]);
+  }
 
-  applyInFilter("sport", args.sports);
-  applyInFilter("organisation_type", args.organisationTypes);
-  applyInFilter("country", args.countries);
-  applyInFilter("content_type", args.contentTypes);
-  applyInFilter("language", args.languages);
+  if (args.organisationTypes?.length) {
+    query = query.in("organisation_type", args.organisationTypes as string[]);
+  }
+
+  if (args.countries?.length) {
+    query = query.in("country", args.countries as string[]);
+  }
+
+  if (args.contentTypes?.length) {
+    query = query.in("content_type", args.contentTypes as string[]);
+  }
+
+  if (args.languages?.length) {
+    query = query.in("language", args.languages as string[]);
+  }
 
   if (args.topics?.length) {
     query = query.overlaps("topics", args.topics);
