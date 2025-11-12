@@ -58,11 +58,9 @@ async function seed() {
     is_fake: true,
   }));
 
-  await supabase
-    .from("sources")
-    .upsert(sourcePayload as Database["public"]["Tables"]["sources"]["Insert"][], {
-      onConflict: "slug",
-    });
+  await (supabase.from("sources") as any).upsert(sourcePayload, {
+    onConflict: "slug",
+  });
 
   const { data: storedSources, error: sourceError } = await supabase
     .from("sources")
@@ -102,11 +100,9 @@ async function seed() {
     };
   });
 
-  await supabase
-    .from("articles")
-    .upsert(articlePayload as Database["public"]["Tables"]["articles"]["Insert"][], {
-      onConflict: "id",
-    });
+  await (supabase.from("articles") as any).upsert(articlePayload, {
+    onConflict: "id",
+  });
 
   const widgetPayload: Database["public"]["Tables"]["widgets"]["Insert"][] = widgets.map((widget) => ({
     slug: widget.slug,
@@ -121,11 +117,9 @@ async function seed() {
     is_fake: true,
   }));
 
-  await supabase
-    .from("widgets")
-    .upsert(widgetPayload as Database["public"]["Tables"]["widgets"]["Insert"][], {
-      onConflict: "slug",
-    });
+  await (supabase.from("widgets") as any).upsert(widgetPayload, {
+    onConflict: "slug",
+  });
 
   console.info(
     `Seed terminé : ${sourcePayload.length} sources, ${articlePayload.length} articles, ${widgetPayload.length} widgets.`,
