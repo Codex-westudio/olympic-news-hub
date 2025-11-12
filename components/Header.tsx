@@ -4,11 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
-import type { ProfilePlan } from "@/lib/profile";
-
 interface HeaderProps {
   isAuthenticated: boolean;
-  profile: ProfilePlan | null;
+  plan: string | null;
   isAdmin?: boolean;
 }
 
@@ -17,7 +15,7 @@ const navLinks = [
   { href: "/widgets", label: "Widgets" },
 ];
 
-export function Header({ isAuthenticated, profile, isAdmin = false }: HeaderProps) {
+export function Header({ isAuthenticated, plan, isAdmin = false }: HeaderProps) {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
 
@@ -40,9 +38,9 @@ export function Header({ isAuthenticated, profile, isAdmin = false }: HeaderProp
               {link.label}
             </Link>
           ))}
-          {profile && (
+          {plan && (
             <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-              Plan {profile.plan}
+              Plan {plan}
             </span>
           )}
           {isAuthenticated ? (

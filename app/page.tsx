@@ -29,13 +29,13 @@ export default async function Home({
   searchParams: SearchParams;
 }) {
   const {
-    data: { session },
+    data: { user },
   } = await getServerSession();
-  if (!session) {
+  if (!user) {
     return <LandingPage />;
   }
 
-  const profile = await ensureProfile(session.user);
+  const profile = await ensureProfile(user);
   if (!hasActivePlan(profile)) {
     return (
       <div className="mx-auto max-w-2xl space-y-4 rounded-3xl border border-slate-200 bg-white p-10 text-center shadow-sm">

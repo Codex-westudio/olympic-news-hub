@@ -32,22 +32,26 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const {
-    data: { session },
+    data: { session, user },
   } = await getServerSession();
-  const profile = session?.user ? await ensureProfile(session.user) : null;
+  const profile = user ? await ensureProfile(user) : null;
   const adminEmails = (process.env.ADMIN_EMAILS || "")
     .split(",")
     .map((email) => email.trim().toLowerCase())
     .filter(Boolean);
-  const isAdmin = session?.user?.email
-    ? adminEmails.includes(session.user.email.toLowerCase())
+  const isAdmin = user?.email
+    ? adminEmails.includes(user.email.toLowerCase())
     : false;
 
   return (
     <html lang="fr">
       <body className={`${manrope.variable} ${spaceMono.variable} bg-slate-50 antialiased`}>
         <SupabaseProvider initialSession={session}>
-          <Header isAuthenticated={Boolean(session)} profile={profile} isAdmin={isAdmin} />
+          <Header
+            isAuthenticated={Boolean(user)}
+            plan={profile?.plan ?? null}
+            isAdmin={isAdmin}
+          />
           <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>
         </SupabaseProvider>
       </body>

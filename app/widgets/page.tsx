@@ -8,9 +8,9 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default async function WidgetBuilderPage() {
   const {
-    data: { session },
+    data: { user },
   } = await getServerSession();
-  const profile = session?.user ? await ensureProfile(session.user) : null;
+  const profile = user ? await ensureProfile(user) : null;
   const active = hasActivePlan(profile);
 
   if (!active) {

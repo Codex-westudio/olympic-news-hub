@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 import { ensureProfile } from "@/lib/profile";
 import { getServiceRoleClient } from "@/lib/supabaseServer";
@@ -6,13 +7,21 @@ import { getServerSession } from "@/lib/articlesService";
 
 export default async function AdminPage() {
   const {
-    data: { session },
+    data: { user },
   } = await getServerSession();
-  if (!session?.user) {
-    return null;
+  if (!user) {
+    redirect("/auth");
   }
 
-  await ensureProfile(session.user);
+  await ensureProfile(user);
+
+  const adminEmails = (process.env.ADMIN_EMAILS || "")
+    .split(",")
+    .map((email) => email.trim().toLowerCase())
+    .filter(Boolean);
+  if (!adminEmails.includes(user.email?.toLowerCase() ?? "")) {
+    redirect("/");
+  }
 
   const supabase = getServiceRoleClient();
   const { data, error } = await supabase

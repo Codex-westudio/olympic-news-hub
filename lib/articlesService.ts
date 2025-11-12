@@ -151,9 +151,17 @@ export async function fetchWidgetFromSupabase(
 
 export async function getServerSession() {
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-    return { data: { session: null }, error: null };
+    return { data: { session: null, user: null }, error: null };
   }
+
   const cookieStore = cookies();
   const client = createServerComponentClient<Database>({ cookies: () => cookieStore });
-  return client.auth.getSession();
+
+  const [{ data: sessionData, error: sessionError }, { data: userData, error: userError }] =
+    await Promise.all([client.auth.getSession(), client.auth.getUser()]);
+
+  return {
+    data: { session: sessionData.session, user: userData.user },
+    error: sessionError ?? userError,
+  };
 }
