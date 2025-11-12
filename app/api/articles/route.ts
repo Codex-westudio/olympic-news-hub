@@ -2,9 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { ArticleQueryArgs, queryArticles } from "@/lib/articlesService";
 import { DEFAULT_PER_PAGE, MAX_LIMIT } from "@/lib/filtering";
+import type { ContentType, OrganisationType } from "@/types/articles";
 
-const toList = (params: URLSearchParams, key: string) => {
-  const values = params.getAll(key).filter(Boolean);
+const toList = <T extends string>(params: URLSearchParams, key: string) => {
+  const values = params.getAll(key).filter(Boolean) as T[];
   return values.length ? values : undefined;
 };
 
@@ -18,12 +19,12 @@ export async function GET(request: NextRequest) {
 
     const input: ArticleQueryArgs = {
       query: searchParams.get("query") ?? undefined,
-      sports: toList(searchParams, "sport"),
-      organisationTypes: toList(searchParams, "organisation_type"),
-      countries: toList(searchParams, "country"),
-      contentTypes: toList(searchParams, "content_type"),
-      languages: toList(searchParams, "language"),
-      topics: toList(searchParams, "topics"),
+      sports: toList<string>(searchParams, "sport"),
+      organisationTypes: toList<OrganisationType>(searchParams, "organisation_type"),
+      countries: toList<string>(searchParams, "country"),
+      contentTypes: toList<ContentType>(searchParams, "content_type"),
+      languages: toList<string>(searchParams, "language"),
+      topics: toList<string>(searchParams, "topics"),
       limit,
       page,
       sort,

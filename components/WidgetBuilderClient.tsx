@@ -345,8 +345,8 @@ export function WidgetBuilderClient({ siteUrl }: WidgetBuilderClientProps) {
           {iframeSnippet}
         </pre>
         <p className="text-xs text-slate-500">
-          Ajoute l’attribut `allow="clipboard-write"` si ton CMS le requiert. L’iframe pointe vers{" "}
-          <span className="font-mono text-slate-700">{embedUrl}</span>.
+          Ajoute l’attribut `allow=&quot;clipboard-write&quot;` si ton CMS le requiert. L’iframe pointe
+          vers <span className="font-mono text-slate-700">{embedUrl}</span>.
         </p>
       </div>
     </div>
