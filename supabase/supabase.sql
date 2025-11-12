@@ -56,7 +56,7 @@ create table if not exists public.widgets (
   name text not null,
   description text,
   filters jsonb not null default '{}'::jsonb,
-  limit int not null default 12 check (limit between 1 and 50),
+  "limit" int not null default 12 check ("limit" between 1 and 50),
   sort text not null default 'date_desc' check (sort in ('date_desc','date_asc','official_desc')),
   owner_id uuid references auth.users (id) on delete set null,
   is_public boolean not null default true,
@@ -99,29 +99,73 @@ alter table public.articles enable row level security;
 alter table public.widgets enable row level security;
 
 -- Profiles policies
-create policy if not exists "profiles select self" on public.profiles
-  for select using (auth.uid() = id);
-create policy if not exists "profiles update self" on public.profiles
-  for update using (auth.uid() = id) with check (auth.uid() = id);
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'profiles' and policyname = 'profiles select self'
+  ) then
+    create policy "profiles select self" on public.profiles
+      for select using (auth.uid() = id);
+  end if;
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'profiles' and policyname = 'profiles update self'
+  ) then
+    create policy "profiles update self" on public.profiles
+      for update using (auth.uid() = id) with check (auth.uid() = id);
+  end if;
+end $$;
 
 -- Sources policies (public read, service role manage)
-create policy if not exists "sources public read" on public.sources
-  for select using (true);
-create policy if not exists "sources service manage" on public.sources
-  for all using (auth.role() = 'service_role') with check (auth.role() = 'service_role');
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'sources' and policyname = 'sources public read'
+  ) then
+    create policy "sources public read" on public.sources
+      for select using (true);
+  end if;
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'sources' and policyname = 'sources service manage'
+  ) then
+    create policy "sources service manage" on public.sources
+      for all using (auth.role() = 'service_role') with check (auth.role() = 'service_role');
+  end if;
+end $$;
 
 -- Articles policies
-create policy if not exists "articles published read" on public.articles
-  for select using (status = 'published');
-create policy if not exists "articles service manage" on public.articles
-  for all using (auth.role() = 'service_role') with check (auth.role() = 'service_role');
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'articles' and policyname = 'articles published read'
+  ) then
+    create policy "articles published read" on public.articles
+      for select using (status = 'published');
+  end if;
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'articles' and policyname = 'articles service manage'
+  ) then
+    create policy "articles service manage" on public.articles
+      for all using (auth.role() = 'service_role') with check (auth.role() = 'service_role');
+  end if;
+end $$;
 
 -- Widgets policies
-create policy if not exists "widgets public read" on public.widgets
-  for select using (is_public or owner_id = auth.uid() or auth.role() = 'service_role');
-create policy if not exists "widgets owners write" on public.widgets
-  for all using (owner_id = auth.uid() or auth.role() = 'service_role')
-  with check (owner_id = auth.uid() or auth.role() = 'service_role');
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'widgets' and policyname = 'widgets public read'
+  ) then
+    create policy "widgets public read" on public.widgets
+      for select using (is_public or owner_id = auth.uid() or auth.role() = 'service_role');
+  end if;
+  if not exists (
+    select 1 from pg_policies where schemaname = 'public' and tablename = 'widgets' and policyname = 'widgets owners write'
+  ) then
+    create policy "widgets owners write" on public.widgets
+      for all using (owner_id = auth.uid() or auth.role() = 'service_role')
+      with check (owner_id = auth.uid() or auth.role() = 'service_role');
+  end if;
+end $$;
 
 comment on table public.articles is
   'n8n exploite la clé service_role côté serveur uniquement pour insérer les articles officiels.';
