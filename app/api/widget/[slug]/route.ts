@@ -30,8 +30,10 @@ export async function GET(
   try {
     const { searchParams } = new URL(request.url);
     const fallback = searchParams.get("fallback") === "true";
-    const windowDays = Number(searchParams.get("windowDays") ?? "") || 60;
-    const fallbackDays = Number(searchParams.get("fallbackWindowDays") ?? "") || 180;
+    const windowDays = Number(searchParams.get("windowDays") ?? "") || 365;
+    const fallbackParam = searchParams.get("fallbackWindowDays");
+    const fallbackDays =
+      fallbackParam !== null ? Number(fallbackParam) : 720;
     const limitParam = Number(searchParams.get("limit") ?? "");
 
     const limit = Math.min(limitParam || 0, MAX_LIMIT);
@@ -81,6 +83,14 @@ export async function GET(
         sort: widget.sort,
         publishedAfter: fallbackWindow,
       });
+
+      if (!result.items.length) {
+        result = await queryArticles({
+          ...filters,
+          limit: queryLimit,
+          sort: widget.sort,
+        });
+      }
     }
 
     return NextResponse.json({
