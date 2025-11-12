@@ -57,9 +57,9 @@ async function fetchArticlesFromSupabase(args: ArticleQueryArgs): Promise<Pagina
     )
     .eq("status", "published");
 
-  const applyInFilter = <Key extends string>(column: Key, values?: string[]) => {
+  const applyInFilter = <Key extends string>(column: Key, values?: readonly string[]) => {
     if (values?.length) {
-      query = query.in(column, values);
+      query = query.in(column, values as string[]);
     }
   };
 
