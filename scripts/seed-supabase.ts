@@ -1,5 +1,5 @@
 // @ts-nocheck
-import "dotenv/config";
+import { config } from "dotenv";
 import { readFile } from "fs/promises";
 import path from "path";
 
@@ -7,6 +7,8 @@ import { createClient } from "@supabase/supabase-js";
 
 import type { Article, WidgetConfig } from "@/types/articles";
 import type { Database } from "@/types/database";
+
+config({ path: path.join(process.cwd(), ".env.local") });
 
 const requiredEnv = ["NEXT_PUBLIC_SUPABASE_URL", "SUPABASE_SERVICE_ROLE_KEY"] as const;
 
