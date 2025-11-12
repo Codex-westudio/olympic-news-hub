@@ -45,7 +45,9 @@ async function seed() {
     }
   });
 
-  const sourcePayload = Array.from(sourcesMap.entries()).map(([name, article]) => ({
+  const sourcePayload: Database["public"]["Tables"]["sources"]["Insert"][] = Array.from(
+    sourcesMap.entries(),
+  ).map(([name, article]) => ({
     slug: toSlug(name),
     name,
     organisation_type: article.organisation_type,
@@ -69,7 +71,7 @@ async function seed() {
 
   const sourceIdBySlug = new Map(storedSources?.map((source) => [source.slug, source.id]));
 
-  const articlePayload = articles.map((article) => {
+  const articlePayload: Database["public"]["Tables"]["articles"]["Insert"][] = articles.map((article) => {
     const sourceSlug = toSlug(article.source_name);
     const source_id = sourceIdBySlug.get(sourceSlug);
     if (!source_id) {
@@ -98,7 +100,7 @@ async function seed() {
 
   await supabase.from("articles").upsert(articlePayload, { onConflict: "id" });
 
-  const widgetPayload = widgets.map((widget) => ({
+  const widgetPayload: Database["public"]["Tables"]["widgets"]["Insert"][] = widgets.map((widget) => ({
     slug: widget.slug,
     name: widget.name,
     description: widget.description,
