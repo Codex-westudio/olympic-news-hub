@@ -26,19 +26,6 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(redirectUrl);
   }
 
-  if (pathname.startsWith("/admin")) {
-    const adminEmails = (process.env.ADMIN_EMAILS || "")
-      .split(",")
-      .map((email) => email.trim().toLowerCase())
-      .filter(Boolean);
-    const userEmail = session.user?.email?.toLowerCase() ?? "";
-    if (!adminEmails.includes(userEmail)) {
-      const homeUrl = request.nextUrl.clone();
-      homeUrl.pathname = "/";
-      return NextResponse.redirect(homeUrl);
-    }
-  }
-
   return response;
 }
 
