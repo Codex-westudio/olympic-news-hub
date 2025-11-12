@@ -136,15 +136,16 @@ export async function fetchWidgetFromSupabase(
   }
 
   if (!data) return null;
+  const widgetRow = data as Database["public"]["Tables"]["widgets"]["Row"];
 
   return {
-    slug: data.slug,
-    name: data.name,
-    description: data.description ?? undefined,
-    limit: data.limit,
-    sort: (data.sort as SortOption) ?? "date_desc",
-    filters: (data.filters as WidgetFilters) ?? {},
-    allowed_domains: data.allowed_domains,
+    slug: widgetRow.slug,
+    name: widgetRow.name,
+    description: widgetRow.description ?? undefined,
+    limit: widgetRow.limit,
+    sort: (widgetRow.sort as SortOption) ?? "date_desc",
+    filters: (widgetRow.filters as WidgetFilters) ?? {},
+    allowed_domains: widgetRow.allowed_domains,
   };
 }
 
