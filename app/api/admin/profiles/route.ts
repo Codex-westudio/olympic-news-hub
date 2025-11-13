@@ -37,8 +37,7 @@ export async function POST(request: NextRequest) {
       is_active,
     };
 
-    const { error } = await supabase
-      .from<Database["public"]["Tables"]["profiles"]["Row"]>("profiles")
+    const { error } = await (supabase.from("profiles") as any)
       .update(updates)
       .eq("id", id);
 
