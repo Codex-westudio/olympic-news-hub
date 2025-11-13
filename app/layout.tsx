@@ -49,7 +49,8 @@ export default async function RootLayout({
         <SupabaseProvider initialSession={session}>
           <Header
             isAuthenticated={Boolean(user)}
-            plan={profile?.plan ?? null}
+            planName={profile?.plan ?? null}
+            planExpiresAt={profile?.plan_expires_at ?? null}
             isAdmin={isAdmin}
           />
           <main className="mx-auto max-w-6xl px-4 py-8">{children}</main>

@@ -8,7 +8,7 @@ const highlights = [
     icon: LineChart,
   },
   {
-    title: "Confiance olympique",
+    title: "Confiance",
     description: "Flux modéré et contextualisé : topics gouvernance, intégrité, nomination, calendrier.",
     icon: Shield,
   },
@@ -19,7 +19,7 @@ const highlights = [
   },
 ];
 
-const plans = [
+export const pricingPlans = [
   {
     name: "Essai 30 jours",
     price: "0€",
@@ -53,7 +53,7 @@ export function LandingPage() {
         <div className="max-w-4xl space-y-6">
           <p className="text-xs uppercase tracking-[0.4em] text-slate-300">World Sports Pulse</p>
           <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
-            Centralise les actus officielles des organisations olympiques.
+            Centralise les actus officielles des organisations sportives.
           </h1>
           <p className="text-lg text-slate-200">
             Un tableau de bord unique pour surveiller les communiqués, nominations, rapports et calendriers
@@ -99,7 +99,7 @@ export function LandingPage() {
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {plans.map((plan) => (
+          {pricingPlans.map((plan) => (
             <div key={plan.name} className="flex flex-col rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
               <span className="mb-4 inline-flex w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
                 {plan.badge}

@@ -66,7 +66,7 @@ export function AuthForm() {
         />
       </label>
       <p className="text-xs text-slate-500">
-        Nous utilisons un lien magique Supabase. Aucune clé secrète n’est exposée côté client.
+        Nous utilisons un lien magique. Aucune clé secrète n’est exposée côté client.
       </p>
       <button
         type="submit"

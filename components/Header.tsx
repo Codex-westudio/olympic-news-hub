@@ -4,20 +4,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+
 interface HeaderProps {
   isAuthenticated: boolean;
-  plan: string | null;
+  planName: string | null;
+  planExpiresAt: string | null;
   isAdmin?: boolean;
 }
 
-const navLinks = [
-  { href: "/#plans", label: "Plans" },
+const guestLinks = [{ href: "/#plans", label: "Plans" }];
+const authLinks = [
+  { href: "/", label: "Actualités" },
   { href: "/widgets", label: "Widgets" },
 ];
 
-export function Header({ isAuthenticated, plan, isAdmin = false }: HeaderProps) {
+const formatExpiry = (value: string | null) => {
+  if (!value) return null;
+  try {
+    return format(new Date(value), "dd MMM yyyy", { locale: fr });
+  } catch {
+    return null;
+  }
+};
+
+export function Header({ isAuthenticated, planName, planExpiresAt, isAdmin = false }: HeaderProps) {
   const pathname = usePathname();
   const isActive = (href: string) => pathname === href;
+  const navLinks = isAuthenticated ? authLinks : guestLinks;
+  const expiryLabel = formatExpiry(planExpiresAt);
 
   return (
     <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/90 backdrop-blur">
@@ -38,26 +54,18 @@ export function Header({ isAuthenticated, plan, isAdmin = false }: HeaderProps) 
               {link.label}
             </Link>
           ))}
-          {plan && (
+          {isAuthenticated && planName && (
             <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
-              Plan {plan}
+              Plan {planName}
+              {expiryLabel ? ` · exp. ${expiryLabel}` : ""}
             </span>
           )}
-          {isAuthenticated ? (
-            <Link
-              href="/auth"
-              className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
-            >
-              Mon espace
-            </Link>
-          ) : (
-            <Link
-              href="/auth"
-              className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
-            >
-              Se connecter
-            </Link>
-          )}
+          <Link
+            href="/auth"
+            className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
+          >
+            {isAuthenticated ? "Mon espace" : "Se connecter"}
+          </Link>
           {isAdmin && (
             <Link
               href="/admin"
