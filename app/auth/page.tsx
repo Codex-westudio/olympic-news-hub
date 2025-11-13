@@ -97,7 +97,6 @@ export default async function AuthPage() {
         </div>
       </div>
 
-      <AuthForm />
     </div>
   );
 }
