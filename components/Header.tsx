@@ -7,6 +7,8 @@ import clsx from "clsx";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 
+import { LogoutButton } from "@/components/LogoutButton";
+
 interface HeaderProps {
   isAuthenticated: boolean;
   planName: string | null;
@@ -60,12 +62,24 @@ export function Header({ isAuthenticated, planName, planExpiresAt, isAdmin = fal
               {expiryLabel ? ` · exp. ${expiryLabel}` : ""}
             </span>
           )}
-          <Link
-            href="/auth"
-            className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
-          >
-            {isAuthenticated ? "Mon espace" : "Se connecter"}
-          </Link>
+          {isAuthenticated ? (
+            <div className="flex items-center gap-2">
+              <Link
+                href="/auth"
+                className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
+              >
+                Mon espace
+              </Link>
+              <LogoutButton />
+            </div>
+          ) : (
+            <Link
+              href="/auth"
+              className="rounded-full border border-midnight px-4 py-1 text-sm font-semibold text-midnight transition hover:bg-midnight hover:text-white"
+            >
+              Se connecter
+            </Link>
+          )}
           {isAdmin && (
             <Link
               href="/admin"
