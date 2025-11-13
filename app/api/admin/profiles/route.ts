@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getServiceRoleClient } from "@/lib/supabaseServer";
 import { getServerSession } from "@/lib/articlesService";
+import type { Database } from "@/types/database";
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,13 +22,24 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Accès refusé" }, { status: 403 });
     }
 
-    const payload = await request.json();
+    const payload = (await request.json()) as {
+      id: string;
+      plan?: string;
+      plan_expires_at?: string | null;
+      is_active?: boolean;
+    };
     const { id, plan, plan_expires_at, is_active } = payload;
 
     const supabase = getServiceRoleClient();
+    const updates: Database["public"]["Tables"]["profiles"]["Update"] = {
+      plan,
+      plan_expires_at,
+      is_active,
+    };
+
     const { error } = await supabase
-      .from("profiles")
-      .update({ plan, plan_expires_at, is_active })
+      .from<Database["public"]["Tables"]["profiles"]["Row"]>("profiles")
+      .update(updates)
       .eq("id", id);
 
     if (error) {
