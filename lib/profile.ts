@@ -23,13 +23,14 @@ export async function ensureProfile(user: { id: string; email?: string | null })
 
   if (!data) {
     const expiresAt = addDays(new Date(), 30).toISOString();
-    await supabase.from("profiles").insert({
+    const newProfile: Database["public"]["Tables"]["profiles"]["Insert"] = {
       id: user.id,
       email: user.email ?? null,
       plan: "trial",
       plan_expires_at: expiresAt,
       is_active: true,
-    });
+    };
+    await (supabase.from("profiles") as any).insert(newProfile);
     return {
       id: user.id,
       email: user.email ?? null,
