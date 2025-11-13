@@ -37,7 +37,7 @@ async function fetchCustomPayload(bag: URLSearchParams) {
     limit,
     sort: filters.sort,
   });
-  const title = bag.get("title") || "Widget Olympic News Hub";
+  const title = bag.get("title") || "Widget World Sports Pulse";
   const description = bag.get("description") || "Flux embarqué personnalisé.";
   return {
     widget: {

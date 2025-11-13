@@ -34,7 +34,7 @@ interface BuilderForm {
 }
 
 const defaultForm: BuilderForm = {
-  title: "Widget Olympic News Hub",
+  title: "Widget World Sports Pulse",
   description: "Flux officiel filtré.",
   query: "",
   sport: "",
@@ -72,7 +72,7 @@ export function WidgetBuilderClient({ siteUrl }: WidgetBuilderClientProps) {
 
   const embedParams = useMemo(() => {
     const search = new URLSearchParams(params.toString());
-    search.set("title", form.title || "Widget Olympic News Hub");
+    search.set("title", form.title || "Widget World Sports Pulse");
     if (form.description) search.set("description", form.description);
     return search;
   }, [params, form.title, form.description]);

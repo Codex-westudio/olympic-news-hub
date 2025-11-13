@@ -116,7 +116,7 @@ export function ArticlesClient({ initialData, initialParams }: ArticlesClientPro
   return (
     <section className="space-y-8">
       <div className="space-y-3">
-        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">Olympic News Hub</p>
+        <p className="text-sm uppercase tracking-[0.3em] text-slate-500">World Sports Pulse</p>
         <h1 className="text-3xl font-semibold text-slate-900">
           Toutes les actus officielles en un seul endroit
         </h1>

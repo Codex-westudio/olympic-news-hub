@@ -45,7 +45,7 @@ export default async function WidgetBuilderPage() {
       <div className="space-y-3">
         <p className="text-xs uppercase tracking-[0.4em] text-slate-500">Widget builder</p>
         <h1 className="text-3xl font-semibold text-slate-900">
-          Génère ton embed Olympic News Hub
+          Génère ton embed World Sports Pulse
         </h1>
         <p className="text-base text-slate-600">
           Compose un widget filtré (sport, langue, topics, tri) puis récupère l’iframe à intégrer

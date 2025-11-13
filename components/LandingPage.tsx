@@ -51,7 +51,7 @@ export function LandingPage() {
     <div className="space-y-24">
       <section className="relative overflow-hidden rounded-3xl bg-midnight px-8 py-12 text-white">
         <div className="max-w-4xl space-y-6">
-          <p className="text-xs uppercase tracking-[0.4em] text-slate-300">Olympic News Hub</p>
+          <p className="text-xs uppercase tracking-[0.4em] text-slate-300">World Sports Pulse</p>
           <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
             Centralise les actus officielles des organisations olympiques.
           </h1>

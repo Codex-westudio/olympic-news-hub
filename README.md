@@ -1,4 +1,4 @@
-# Olympic News Hub
+# World Sports Pulse
 
 Agrégateur Next.js 14 (App Router) pour suivre les actualités officielles des organisations olympiques. Le projet est structuré en deux étapes :
 
